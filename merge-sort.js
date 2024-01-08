@@ -1,31 +1,27 @@
-function mergeSort(array) {
-  // the base case
-  if (array.length === 1) {
-    return array;
+function mergeSort(arr) {
+  // base case
+  if (arr.length == 1) {
+    return arr;
+
+    //recursive case
   } else {
-    let mid = array.length / 2;
-    //first the left half is being extracted
-    let lefthalf = array.slice(0, mid);
-    let righthalf = array.slice(mid);
-    let sortedLeftHalf = mergeSort(lefthalf);
-    let sortedArray = [];
-    for (let i = 0; i < sortedLeftHalf.length; i++) {
-      console.log(sortedLeftHalf[i]);
-
-      let sortedRightHalf = mergeSort(righthalf);
-      for (j = 0; j < sortedRightHalf.length; j++) {
-        console.log(sortedLeftHalf[j]);
-
-        if (sortedLeftHalf[i] < sortedRightHalf[j]) {
-          sortedArray.push(sortedLeftHalf[i]);
-        } else {
-          sortedArray.push(sortedRightHalf[j]);
-        }
-      }
-    }
-
-    return sortedArray;
+    let mid = Math.floor(arr.length / 2);
+    let leftHalf = mergeSort(arr.slice(0, mid));
+    let rightHalf = mergeSort(arr.slice(mid));
+    let sortedValue = merge(leftHalf, rightHalf);
+    return sortedValue;
   }
 }
 
-console.log(mergeSort([555, 544, 655, 6777, 4444, 9999]));
+function merge(leftHalf, rightHalf) {
+  let sortedArray = [];
+  while (leftHalf.length && rightHalf.length) {
+    if (leftHalf[0] < rightHalf[0]) {
+      sortedArray.push(leftHalf.shift());
+    } else {
+      sortedArray.push(rightHalf.shift());
+    }
+  }
+  return sortedArray.concat(leftHalf).concat(rightHalf);
+}
+console.log(mergeSort([1, 3, 5, 2, 4, 6])); // 1 2 3 4 5 6
